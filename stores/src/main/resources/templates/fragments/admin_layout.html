@@ -20,9 +20,8 @@
     <!-- Custom styles for this template-->
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 <!--    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">-->
-    <link th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}"/>
     <link th:href="@{/webjars/bootstrap-modal/2.2.5/css/bootstrap-modal.css}"/>
-
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}"/>
 </head>
 
 <body id="page-top">
@@ -72,15 +71,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Bạn muốn đăng xuất phải không?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Click Đăng xuất để thoát khỏi giao diện trang web.</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                <a class="btn btn-primary" href="login.html">Đăng xuất</a>
             </div>
         </div>
     </div>

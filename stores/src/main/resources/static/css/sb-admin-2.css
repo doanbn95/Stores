@@ -10996,3 +10996,24 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+.glyphicon-edit {
+  color: gold;
+}
+
+.glyphicon-edit:hover {
+  color: goldenrod;
+}
+
+.glyphicon-trash {
+  color: red;
+}
+
+.glyphicon-trash:hover {
+  color: darkred;
+}
+
+.glyphicon {
+  padding: 2px;
+}
+
+

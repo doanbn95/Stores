@@ -12,7 +12,6 @@ public class ProductController {
     @GetMapping(value = "/list")
     public ModelAndView viewListForm(){
         ModelAndView mav= new ModelAndView();
-        System.out.println("View form");
         mav.setViewName("admin/product/list");
         return mav;
     }
