@@ -3,27 +3,22 @@ package haui.doan.stores.controller;
 import haui.doan.stores.constant.CommonConstants;
 import haui.doan.stores.dto.request.UserRequest;
 import haui.doan.stores.dto.response.ErrorResponse;
+import haui.doan.stores.dto.response.UserResponse;
 import haui.doan.stores.enums.RoleEnum;
 import haui.doan.stores.persistenct.domain.User;
-import haui.doan.stores.service.ImageService;
 import haui.doan.stores.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +60,9 @@ public class EmployeeController {
                 errors.add(new ErrorResponse(fieldError.getDefaultMessage(), fieldError.getField()));
             }
         }
+        if (!userService.checkUserNameExists(request.getUsername(), request.getUsernameOld())) {
+            errors.add(new ErrorResponse("username", "Email đã tồn tại"));
+        }
         if (errors.isEmpty()) {
             userService.createUser(request);
             map.put("status", 200);
@@ -75,7 +73,18 @@ public class EmployeeController {
         return map;
     }
 
+    @GetMapping("/edit/{id}")
+    public ModelAndView viewUser(@PathVariable("id") Long id) {
+        ModelAndView mav = new ModelAndView();
+        UserResponse userResponse = userService.editUser(id);
+        mav.addObject("userRespone", userResponse);
+        mav.setViewName("/admin/employee/edit");
+        return mav;
+
+    }
+
     @PostMapping("/update")
+    @ResponseBody
     public Map<String, Object> updateEmployee(@Valid UserRequest request, BindingResult result) {
         Map<String, Object> map = new HashMap<>();
         List<ErrorResponse> errors = new ArrayList<>();
@@ -83,6 +92,9 @@ public class EmployeeController {
             for (FieldError fieldError : result.getFieldErrors()) {
                 errors.add(new ErrorResponse(fieldError.getDefaultMessage(), fieldError.getField()));
             }
+        }
+        if (!userService.checkUserNameExists(request.getUsername(), request.getUsernameOld())) {
+            errors.add(new ErrorResponse("username", "Email đã tồn tại"));
         }
         if (errors.isEmpty()) {
             userService.updateUser(request);

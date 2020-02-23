@@ -16,4 +16,9 @@ public class CommonConstants {
         String URL = "/upload/default.png";
     }
 
+    public interface DATE_FORMAT {
+        String YYYY_MM_DD = "yyyy-MM-dd";
+        String MM_DD_YYYY = "MM-dd-yyyy";
+    }
+
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -25,7 +26,7 @@ public class User extends BaseEntity {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "image_id",insertable = false,updatable = false)
+    @Column(name = "image_id", insertable = false, updatable = false)
     private Long imageId;
 
     @Column(name = "name")
@@ -39,6 +40,9 @@ public class User extends BaseEntity {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "birth_day")
+    private Date birthDay;
 
     @Column(name = "status")
     private int status;

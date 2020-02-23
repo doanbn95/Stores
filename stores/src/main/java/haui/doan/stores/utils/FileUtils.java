@@ -30,7 +30,7 @@ public class FileUtils {
     }
 
     public static boolean checkFileNullOrEmpty(MultipartFile file) {
-        return file.isEmpty() || file.getSize() == 0;
+        return file.isEmpty() || file.getSize() == 0 || file == null;
     }
 
 }

@@ -1,0 +1,7 @@
+#image_view {
+    border: 1px solid blue;
+    border-radius: 10px;
+    width: 300px;
+    margin-bottom: 10px;
+    height: 300px;
+}

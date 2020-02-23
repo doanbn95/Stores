@@ -59,7 +59,8 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image updateImage(ImageRequest request) {
         Image flag = imageRepository.getOne(request.getId());
-        if (FileUtils.checkFileNullOrEmpty(request.getImage())) {
+
+        if (request.getImage()==null||FileUtils.checkFileNullOrEmpty(request.getImage())) {
             return flag;
         } else {
             //xoa anh

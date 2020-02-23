@@ -1,6 +1,7 @@
 package haui.doan.stores.service;
 
 import haui.doan.stores.dto.request.UserRequest;
+import haui.doan.stores.dto.response.UserResponse;
 import haui.doan.stores.enums.RoleEnum;
 import haui.doan.stores.persistenct.domain.User;
 
@@ -11,6 +12,8 @@ public interface UserService {
     User createUser(UserRequest request);
 
     User updateUser(UserRequest request);
+
+    UserResponse editUser(Long id);
 
     User getUserByUsername(String username);
 

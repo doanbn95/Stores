@@ -10,38 +10,35 @@
     <div class="col-12 grid-margin">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Thêm thông tin nhân viên</h4>
+                <h4 class="card-title">Thêm nhân viên mới</h4>
                 <form class="form-sample border-info" method="post" th:action="@{/admin/employee/create}"
                       th:object="${userForm}" enctype="multipart/form-data">
-                    <p class="card-description"> Thông tin nhân viên</p>
+                    <p class="card-description" style="background-color: #429cb6; color: white; padding: 10px"> Thông
+                        tin tài khoản</p>
                     <!--                    Hidden-->
                     <div>
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{imageId}"/>
-
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card-body">
-                                <center class="m-t-30"><img th:src="@{/upload/default.png}" class="img-circle"
-                                                            width="150">
+                                <center class="m-t-30">
+                                    <img id="image_view" th:src="@{/upload/default.png}" class="img-circle" width="150">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3" style="margin: 0px auto;">
+                                            <input type="file" th:field="*{image}" class="form-control" id="image_file"
+                                                   placeholder="Image source">
+                                        </div>
+                                    </div>
                                 </center>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Image source:</label>
-                                <div class="col-sm-9">
-                                    <input type="file" th:field="*{image}" class="form-control"
-                                           placeholder="Image source">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Email :</label>
+                                <label class="col-sm-3 col-form-label">Email:</label>
                                 <div class="col-sm-9">
                                     <input type="email" th:field="*{username}" class="form-control" placeholder="Email">
                                 </div>
@@ -53,6 +50,26 @@
                                 <div class="col-sm-9">
                                     <input type="text" th:field="*{name}" class="form-control"
                                            placeholder="Tên nhân viên">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Ngày sinh:</label>
+                                <div class="col-sm-9">
+                                    <input type="date" th:field="*{birthDay}" class="form-control"
+                                           placeholder="Ngày sinh">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Số điện thoại:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" th:field="*{phone}" class="form-control"
+                                           placeholder="Số điện thoại">
                                 </div>
                             </div>
                         </div>
@@ -91,6 +108,9 @@
             </div>
         </div>
     </div>
+</th:block>
+<th:block layout:fragment="custom" th:remove="tag">
+    <script th:src="@{/js/main.js}"></script>
 </th:block>
 </body>
 </html>
