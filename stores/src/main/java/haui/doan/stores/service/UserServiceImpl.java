@@ -10,9 +10,9 @@ import haui.doan.stores.persistenct.domain.Image;
 import haui.doan.stores.persistenct.domain.User;
 import haui.doan.stores.persistenct.repository.UserRepository;
 import haui.doan.stores.utils.Dates;
-import haui.doan.stores.utils.PasswordEncoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
         response.setAddress(user.getAddress());
         response.setPhone(user.getPhone());
         response.setBirthDay(Dates.format(user.getBirthDay(), CommonConstants.DATE_FORMAT.YYYY_MM_DD));
+        response.setUsernameOld(user.getUsername());
         return response;
     }
 
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepository.findUserByUsernameEqualsAndDeletedFalse(username);
+        return userRepository.findUserByUsernameEqualsAndDeletedIs(username, CommonConstants.DELETED.FALSE);
     }
 
     @Override
@@ -92,9 +93,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserResponse> findUsers(RoleEnum role, int deleted) {
+        List<User> users = userRepository.findAllByRoleEqualsAndDeletedIs(role.getText(), deleted);
+        return null;
+    }
+
+    @Override
     public boolean checkUserNameExists(String username, String usernameOld) {
         if (!StringUtils.isEmpty(username)) {
-            User flag = userRepository.findUserByUsernameEqualsAndDeletedFalse(username);
+            User flag = userRepository.findUserByUsernameEqualsAndDeletedIs(username, CommonConstants.DELETED.FALSE);
             if (StringUtils.isEmpty(usernameOld)) {
                 return flag == null;
             } else {

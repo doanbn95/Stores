@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findUserByUsernameEqualsAndDeletedFalse(String username);
+    User findUserByUsernameEqualsAndDeletedIs(String username, int deleted);
 
     List<User> findAllByRoleEqualsAndDeletedIs(String role, int deleted);
 }

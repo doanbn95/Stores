@@ -23,4 +23,6 @@ public interface UserService {
 
     boolean checkUserNameExists(String username, String usernameOld);
 
+    List<UserResponse> findUsers(RoleEnum role, int deleted);
+
 }

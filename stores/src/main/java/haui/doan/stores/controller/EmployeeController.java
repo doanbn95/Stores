@@ -53,6 +53,7 @@ public class EmployeeController {
     @PostMapping("/create")
     @ResponseBody
     public Map<String, Object> createEmployee(@Valid UserRequest request, BindingResult result) {
+        request.setRole(RoleEnum.ROLE_EMPLOYEE.getRole());
         Map<String, Object> map = new HashMap<>();
         List<ErrorResponse> errors = new ArrayList<>();
         if (result.hasErrors()) {
