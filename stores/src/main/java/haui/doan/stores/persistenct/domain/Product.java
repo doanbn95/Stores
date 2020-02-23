@@ -3,56 +3,54 @@ package haui.doan.stores.persistenct.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @Data
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "name")
     private String name;
 
-    @Column(name = "category_id")
-    private int categoryId;
+    @Column(name = "provide_id",insertable = false,updatable = false)
+    private Long provideId;
 
-    @Column(name = "cost")
-    private double cost;
+    @Column(name = "image_id",insertable = false,updatable = false)
+    private Long imageId;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @Column(name = "category_id",insertable = false,updatable = false)
+    private Long categoryId;
+
+    @Column(name = "detail")
+    private String detail;
+
+    @Column(name = "price")
+    private double price;
 
     @Column(name = "status")
     private int status;
 
-    @Column(name = "created")
-    private Date createdDate;
+    @Column(name = "deleted")
+    private int deleted;
 
-    @Column(name = "creator")
-    private String creator;
+    @OneToOne
+    @JoinColumn(name = "provide_id", referencedColumnName = "id", nullable = false)
+    private Provide provide;
 
-    @Column(name = "updated")
-    private Date updatedDate;
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id", nullable = false)
+    private Image image;
 
-    @Column(name = "updater")
-    private String updater;
-
-    @Column(name = "delete_date")
-    private Date deleteDate;
-
-    @Column(name = "delete_person")
-    private String deletePerson;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    @OneToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id", referencedColumnName = "product_id", nullable = false)
-    private ProductDetail productDetail;
 }

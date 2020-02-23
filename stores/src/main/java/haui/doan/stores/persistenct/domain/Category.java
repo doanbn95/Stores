@@ -3,14 +3,11 @@ package haui.doan.stores.persistenct.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
+@Table(name = "categories")
 @Data
-@Table(name = "category")
-public class Category {
+public class Category extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +17,19 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "image_id",insertable = false,updatable = false)
+    private Long imageId;
+
     @Column(name = "status")
     private int status;
-    @OneToMany
-    @JoinColumn(name = "id")
-    private Set<Product> products= new HashSet<>();
 
+    @Column(name = "deleted")
+    private int deleted;
+
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id", nullable = false)
+    private Image image;
 }

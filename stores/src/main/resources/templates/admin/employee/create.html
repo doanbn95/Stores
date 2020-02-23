@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<th:block layout:fragment="content" th:remove="tag">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Thêm thông tin nhân viên</h4>
+                <form class="form-sample border-info" method="post" th:action="@{/admin/employee/create}"
+                      th:object="${userForm}" enctype="multipart/form-data">
+                    <p class="card-description"> Thông tin nhân viên</p>
+                    <!--                    Hidden-->
+                    <div>
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{imageId}"/>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <center class="m-t-30"><img th:src="@{/upload/default.png}" class="img-circle"
+                                                            width="150">
+                                </center>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Image source:</label>
+                                <div class="col-sm-9">
+                                    <input type="file" th:field="*{image}" class="form-control"
+                                           placeholder="Image source">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Email :</label>
+                                <div class="col-sm-9">
+                                    <input type="email" th:field="*{username}" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Tên nhân viên:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" th:field="*{name}" class="form-control"
+                                           placeholder="Tên nhân viên">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Giới tính:</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" th:field="*{gender}">
+                                        <option th:value="0">Nam</option>
+                                        <option th:value="1">Nữ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Địa chỉ:</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" th:field="*{address}" placeholder="Địa chỉ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <button type="submit" class="btn btn-success" style="margin: 0px 10px;">Create</button>
+                            <button class="btn btn-danger" style="margin: 0px 10px;">
+                                <a style="text-decoration: none; color:white;" th:href="@{/admin/employee/}">Cancel</a>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

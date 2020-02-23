@@ -1,33 +1,42 @@
 package haui.doan.stores.dto.request;
 
+import haui.doan.stores.enums.GenderEnum;
+import haui.doan.stores.enums.RoleEnum;
+import haui.doan.stores.persistenct.domain.User;
 import lombok.Data;
-
-import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserRequest {
     private Long id;
 
-    private String userName;
-
-    private String password;
+    private String username;
 
     private int role;
 
-    private int status;
+    private Long imageId;
 
-    private Date createdDate;
+    private MultipartFile image;
 
-    private String creator;
+    private String name;
 
-    private Date updatedDate;
+    private int gender;
 
-    private String updater;
+    private String address;
 
-    private Date deleteDate;
+    private String phone;
 
-    private String deletePerson;
+    private String usernameOld;
 
-    private String userNameOld;
-
+    public User asUser() {
+        User user = new User();
+        user.setId(id);
+        user.setUsername(username);
+        user.setRole(RoleEnum.ofRole(role).getText());
+        user.setName(name);
+        user.setAddress(address);
+        user.setPhone(phone);
+        user.setGender(GenderEnum.ofCode(gender).isValue());
+        return user;
+    }
 }

@@ -1,41 +1,86 @@
 package haui.doan.stores.service;
 
+import haui.doan.stores.constant.CommonConstants;
+import haui.doan.stores.dto.request.ImageRequest;
+import haui.doan.stores.dto.request.UserRequest;
+import haui.doan.stores.enums.GenderEnum;
+import haui.doan.stores.enums.RoleEnum;
+import haui.doan.stores.persistenct.domain.Image;
 import haui.doan.stores.persistenct.domain.User;
 import haui.doan.stores.persistenct.repository.UserRepository;
+import haui.doan.stores.utils.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.nio.file.attribute.UserPrincipal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private ImageService imageService;
 
+    @Override
+    public User createUser(UserRequest request) {
+        User user = request.asUser();
+        user.setPassword("admin");
+        ImageRequest imageRequest = new ImageRequest(request.getId(), request.getImage());
+        Image image = imageService.saveImage(imageRequest);
+        user.setImageId(image.getId());
+        user.setImage(image);
+        user.setDeleted(CommonConstants.DELETED.FALSE);
+        return userRepository.save(user);
     }
 
+    @Override
+    public User updateUser(UserRequest request) {
+        User user = userRepository.getOne(request.getId());
+        user.setId(request.getId());
+        user.setName(request.getName());
+        user.setGender(GenderEnum.ofCode(request.getGender()).isValue());
+        user.setAddress(request.getAddress());
+        user.setPhone(request.getPhone());
+        ImageRequest imageRequest = new ImageRequest(request.getId(), request.getImage());
+        Image image = imageService.updateImage(imageRequest);
+        user.setImageId(image.getId());
+        user.setImage(image);
+        return userRepository.save(user);
+    }
 
-//    @Override
-//    public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user= userRepository.findUserByUserNameIs(username);
-//        if(user==null){
-//            throw new  UsernameNotFoundException("Unknown User");
-//        }
-//        Set<GrantedAuthority> grantedAuthorities=new HashSet<>();
-//        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
-//
-//        return new UserPrincipal(user,true,true,true,true,grantedAuthorities);
-//    }
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findUserByUsernameEqualsAndDeletedFalse(username);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        User user = userRepository.getOne(id);
+        user.setDeleted(CommonConstants.DELETED.TRUE);
+    }
+
+    @Override
+    public List<User> findUsersByDeletedAndRole(RoleEnum role, int deleted) {
+        return userRepository.findAllByRoleEqualsAndDeletedIs(role.getText(), deleted);
+    }
+
+    @Override
+    public boolean checkUserNameExists(String username, String usernameOld) {
+        if (!StringUtils.isEmpty(username)) {
+            User flag = userRepository.findUserByUsernameEqualsAndDeletedFalse(username);
+            if (StringUtils.isEmpty(usernameOld)) {
+                return flag == null;
+            } else {
+                return username.equals(usernameOld) || flag == null;
+            }
+        }
+        return true;
+    }
 }

@@ -1,18 +1,15 @@
 package haui.doan.stores.persistenct.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Date;
 
-@Entity
+@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "User")
-public class User {
+@Entity
+@Table(name = "users")
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +17,7 @@ public class User {
     private Long id;
 
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -28,24 +25,29 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "image_id",insertable = false,updatable = false)
+    private Long imageId;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "gender")
+    private boolean gender;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "status")
     private int status;
 
-    @Column(name = "created")
-    private Date createdDate;
+    @Column(name = "deleted")
+    private int deleted;
 
-    @Column(name = "creator")
-    private String creator;
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id", nullable = false)
+    private Image image;
 
-    @Column(name = "updated")
-    private Date updatedDate;
-
-    @Column(name = "updater")
-    private String updater;
-
-    @Column(name = "delete_date")
-    private Date deleteDate;
-
-    @Column(name = "delete_person")
-    private String deletePerson;
 }
