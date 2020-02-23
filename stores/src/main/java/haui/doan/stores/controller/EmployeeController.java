@@ -8,14 +8,12 @@ import haui.doan.stores.enums.RoleEnum;
 import haui.doan.stores.persistenct.domain.User;
 import haui.doan.stores.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;

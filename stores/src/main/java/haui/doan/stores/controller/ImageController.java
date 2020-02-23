@@ -4,7 +4,6 @@ import haui.doan.stores.dto.request.ImageRequest;
 import haui.doan.stores.persistenct.domain.Image;
 import haui.doan.stores.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
