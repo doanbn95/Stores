@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -93,7 +94,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponse> findUsers(RoleEnum role, int deleted) {
         List<User> users = userRepository.findAllByRoleEqualsAndDeletedIs(role.getText(), deleted);
-        return null;
+        List<UserResponse> responses = new ArrayList<>();
+        users.forEach(user -> {
+            UserResponse response = new UserResponse();
+            response.setId(user.getId());
+            response.setUsername(user.getUsername());
+            response.setRole(user.getRole());
+            response.setName(user.getName());
+            response.setImage(user.getImage().getUrl());
+            response.setImageId(user.getImageId());
+            response.setGender(GenderEnum.ofValue(user.isGender()).getCode());
+            response.setAddress(user.getAddress());
+            response.setPhone(user.getPhone());
+            response.setBirthDay(Dates.format(user.getBirthDay(), CommonConstants.DATE_FORMAT.YYYY_MM_DD));
+            response.setUsernameOld(user.getUsername());
+            responses.add(response);
+        });
+        return responses;
     }
 
     @Override

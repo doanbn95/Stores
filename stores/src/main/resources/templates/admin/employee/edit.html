@@ -4,6 +4,9 @@
       layout:decorate="~{fragments/admin_layout}">
 <head>
     <meta charset="UTF-8">
+    <th:block layout:fragment="header_custom">
+
+    </th:block>
 </head>
 <body>
 <th:block layout:fragment="content" th:remove="tag">
@@ -20,7 +23,6 @@
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{imageId}"/>
                         <input type="hidden" th:field="*{usernameOld}"/>
-                        <input type="hidden" th:field="*{role}" value="1"/>
                     </div>
                     <div class="row">
                         <div class="col-md-12">

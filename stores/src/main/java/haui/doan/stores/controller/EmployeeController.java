@@ -3,17 +3,23 @@ package haui.doan.stores.controller;
 import haui.doan.stores.constant.CommonConstants;
 import haui.doan.stores.dto.request.UserRequest;
 import haui.doan.stores.dto.response.ErrorResponse;
+import haui.doan.stores.dto.response.ListUserRespone;
 import haui.doan.stores.dto.response.UserResponse;
 import haui.doan.stores.enums.RoleEnum;
-import haui.doan.stores.persistenct.domain.User;
 import haui.doan.stores.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -26,17 +32,26 @@ import java.util.Map;
  * The controller for employee
  */
 @Controller
-@RequestMapping(value = "/admin/employee")
+@RequestMapping(value = "/admin/employee", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EmployeeController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("")
+    public ModelAndView getListEmployee() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/admin/employee/list");
+        return mav;
+    }
+
+    @GetMapping("/list")
     @ResponseBody
-    public ResponseEntity<List<User>> getListEmployee() {
-        List<User> users = userService.findUsersByDeletedAndRole(RoleEnum.ROLE_EMPLOYEE, CommonConstants.DELETED.FALSE);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity viewListUser() {
+        ListUserRespone response = new ListUserRespone();
+        List<UserResponse> users = userService.findUsers(RoleEnum.ROLE_EMPLOYEE, CommonConstants.DELETED.FALSE);
+        response.setList(users);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("/create")
@@ -107,7 +122,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable("id") Long id) {
-
+        userService.deleteUser(id);
     }
 
 }
