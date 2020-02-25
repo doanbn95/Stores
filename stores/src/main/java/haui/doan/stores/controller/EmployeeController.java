@@ -3,9 +3,9 @@ package haui.doan.stores.controller;
 import haui.doan.stores.constant.CommonConstants;
 import haui.doan.stores.dto.request.UserRequest;
 import haui.doan.stores.dto.response.ErrorResponse;
-import haui.doan.stores.dto.response.ListUserRespone;
 import haui.doan.stores.dto.response.UserResponse;
 import haui.doan.stores.enums.RoleEnum;
+import haui.doan.stores.persistenct.domain.Category;
 import haui.doan.stores.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,10 +48,8 @@ public class EmployeeController {
     @GetMapping("/list")
     @ResponseBody
     public ResponseEntity viewListUser() {
-        ListUserRespone response = new ListUserRespone();
         List<UserResponse> users = userService.findUsers(RoleEnum.ROLE_EMPLOYEE, CommonConstants.DELETED.FALSE);
-        response.setList(users);
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity(users, HttpStatus.OK);
     }
 
     @GetMapping("/create")
@@ -71,7 +69,7 @@ public class EmployeeController {
         List<ErrorResponse> errors = new ArrayList<>();
         if (result.hasErrors()) {
             for (FieldError fieldError : result.getFieldErrors()) {
-                errors.add(new ErrorResponse(fieldError.getDefaultMessage(), fieldError.getField()));
+                errors.add(new ErrorResponse(fieldError.getField(), fieldError.getDefaultMessage()));
             }
         }
         if (!userService.checkUserNameExists(request.getUsername(), request.getUsernameOld())) {
@@ -104,7 +102,7 @@ public class EmployeeController {
         List<ErrorResponse> errors = new ArrayList<>();
         if (result.hasErrors()) {
             for (FieldError fieldError : result.getFieldErrors()) {
-                errors.add(new ErrorResponse(fieldError.getDefaultMessage(), fieldError.getField()));
+                errors.add(new ErrorResponse(fieldError.getField(), fieldError.getDefaultMessage()));
             }
         }
         if (!userService.checkUserNameExists(request.getUsername(), request.getUsernameOld())) {

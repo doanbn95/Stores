@@ -4,10 +4,11 @@ import lombok.Data;
 
 @Data
 public class CommonConstants {
+    public static final String RESOURCE_BUNDLE_COMMON = "messages";
 
     public interface DELETED {
         int TRUE = 1;
-        int FALSE = 2;
+        int FALSE = 0;
     }
 
     public interface IMAGE_DEFAULT {

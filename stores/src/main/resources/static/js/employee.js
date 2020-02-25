@@ -35,7 +35,7 @@ function getEmployee(table_id) {
                     "zeroRecords": "Xin lỗi, không có kết quả nào tương ứng với tìm kiếm của bạn",
                     "emptyTable": "Không tồn tại bản ghi"
                 },
-                "data": result.list,
+                "data": result,
                 "columns": [
                     {
                         "data": "username"
